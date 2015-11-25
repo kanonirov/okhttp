@@ -36,7 +36,7 @@ public final class WebPlatformUrlTest {
   @Parameterized.Parameters(name = "{0}")
   public static List<Object[]> parameters() {
     try {
-      List<Object[]> result = new ArrayList<>();
+      List<Object[]> result = new ArrayList<Object[]>();
       for (WebPlatformUrlTestData urlTestData : loadTests()) {
         result.add(new Object[] { urlTestData });
       }
@@ -68,7 +68,7 @@ public final class WebPlatformUrlTest {
   );
 
   /** Test how {@link HttpUrl} does against the web platform test suite. */
-  @Test public void httpUrl() throws Exception {
+  @Test public void httpUrl() throws Throwable {
     if (!testData.scheme.isEmpty() && !HTTP_URL_SCHEMES.contains(testData.scheme)) {
       System.err.println("Ignoring unsupported scheme " + testData.scheme);
       return;

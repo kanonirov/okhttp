@@ -108,7 +108,7 @@ public final class MockWebServer implements TestRule {
 
   private static final Logger logger = Logger.getLogger(MockWebServer.class.getName());
 
-  private final BlockingQueue<RecordedRequest> requestQueue = new LinkedBlockingQueue<>();
+  private final BlockingQueue<RecordedRequest> requestQueue = new LinkedBlockingQueue<RecordedRequest>();
 
   private final Set<Socket> openClientSockets =
       Collections.newSetFromMap(new ConcurrentHashMap<Socket, Boolean>());
@@ -623,7 +623,7 @@ public final class MockWebServer implements TestRule {
 
     boolean hasBody = false;
     TruncatingBuffer requestBody = new TruncatingBuffer(bodyLimit);
-    List<Integer> chunkSizes = new ArrayList<>();
+    List<Integer> chunkSizes = new ArrayList<Integer>();
     MockResponse policy = dispatcher.peek();
     if (contentLength != -1) {
       hasBody = contentLength > 0;
@@ -905,7 +905,7 @@ public final class MockWebServer implements TestRule {
       if (response.getSocketPolicy() == SocketPolicy.NO_RESPONSE) {
         return;
       }
-      List<Header> spdyHeaders = new ArrayList<>();
+      List<Header> spdyHeaders = new ArrayList<Header>();
       String[] statusParts = response.getStatus().split(" ", 2);
       if (statusParts.length != 2) {
         throw new AssertionError("Unexpected status: " + response.getStatus());
@@ -936,7 +936,7 @@ public final class MockWebServer implements TestRule {
 
     private void pushPromises(FramedStream stream, List<PushPromise> promises) throws IOException {
       for (PushPromise pushPromise : promises) {
-        List<Header> pushedHeaders = new ArrayList<>();
+        List<Header> pushedHeaders = new ArrayList<Header>();
         pushedHeaders.add(new Header(stream.getConnection().getProtocol() == Protocol.SPDY_3
             ? Header.TARGET_HOST
             : Header.TARGET_AUTHORITY, url(pushPromise.getPath()).host()));

@@ -1056,7 +1056,7 @@ public final class HttpUrlTest {
   @Test public void queryParametersWithoutValues() throws Exception {
     HttpUrl url = HttpUrl.parse("http://host/?foo&bar&baz");
     assertEquals(3, url.querySize());
-    assertEquals(new LinkedHashSet<>(Arrays.asList("foo", "bar", "baz")),
+    assertEquals(new LinkedHashSet<String>(Arrays.asList("foo", "bar", "baz")),
         url.queryParameterNames());
     assertEquals(null, url.queryParameterValue(0));
     assertEquals(null, url.queryParameterValue(1));
@@ -1069,7 +1069,7 @@ public final class HttpUrlTest {
   @Test public void queryParametersWithEmptyValues() throws Exception {
     HttpUrl url = HttpUrl.parse("http://host/?foo=&bar=&baz=");
     assertEquals(3, url.querySize());
-    assertEquals(new LinkedHashSet<>(Arrays.asList("foo", "bar", "baz")),
+    assertEquals(new LinkedHashSet<String>(Arrays.asList("foo", "bar", "baz")),
         url.queryParameterNames());
     assertEquals("", url.queryParameterValue(0));
     assertEquals("", url.queryParameterValue(1));

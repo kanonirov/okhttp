@@ -1494,7 +1494,7 @@ public final class UrlConnectionCacheTest {
   }
 
   public void assertCookies(URL url, String... expectedCookies) throws Exception {
-    List<String> actualCookies = new ArrayList<>();
+    List<String> actualCookies = new ArrayList<String>();
     for (HttpCookie cookie : cookieManager.getCookieStore().get(url.toURI())) {
       actualCookies.add(cookie.toString());
     }

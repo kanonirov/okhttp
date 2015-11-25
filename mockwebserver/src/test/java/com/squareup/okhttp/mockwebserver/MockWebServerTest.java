@@ -259,16 +259,16 @@ public final class MockWebServerTest {
         .setSocketPolicy(SocketPolicy.DISCONNECT_DURING_RESPONSE_BODY));
 
     URLConnection connection = server.getUrl("/").openConnection();
-    assertEquals(2, connection.getHeaderFieldLong("Content-Length", -1));
+    assertEquals(2, connection.getHeaderFieldInt("Content-Length", -1));
     InputStream in = connection.getInputStream();
     assertEquals('a', in.read());
     assertEquals(-1, in.read());
   }
-
+  
   private List<String> headersToList(MockResponse response) {
     Headers headers = response.getHeaders();
     int size = headers.size();
-    List<String> headerList = new ArrayList<>(size);
+    List<String> headerList = new ArrayList<String>(size);
     for (int i = 0; i < size; i++) {
       headerList.add(headers.name(i) + ": " + headers.value(i));
     }

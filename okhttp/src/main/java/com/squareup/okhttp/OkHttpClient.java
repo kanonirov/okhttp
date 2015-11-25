@@ -168,8 +168,8 @@ public class OkHttpClient implements Cloneable {
   private Proxy proxy;
   private List<Protocol> protocols;
   private List<ConnectionSpec> connectionSpecs;
-  private final List<Interceptor> interceptors = new ArrayList<>();
-  private final List<Interceptor> networkInterceptors = new ArrayList<>();
+  private final List<Interceptor> interceptors = new ArrayList<Interceptor>();
+  private final List<Interceptor> networkInterceptors = new ArrayList<Interceptor>();
   private ProxySelector proxySelector;
   private CookieHandler cookieHandler;
 
@@ -187,9 +187,9 @@ public class OkHttpClient implements Cloneable {
   private boolean followSslRedirects = true;
   private boolean followRedirects = true;
   private boolean retryOnConnectionFailure = true;
-  private int connectTimeout = 10_000;
-  private int readTimeout = 10_000;
-  private int writeTimeout = 10_000;
+  private int connectTimeout = 10000;
+  private int readTimeout = 10000;
+  private int writeTimeout = 10000;
 
   public OkHttpClient() {
     routeDatabase = new RouteDatabase();

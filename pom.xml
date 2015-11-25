@@ -9,7 +9,7 @@
     <version>7</version>
   </parent>
 
-  <groupId>com.squareup.okhttp</groupId>
+  <groupId>io.github.kanonirov.okhttp</groupId>
   <artifactId>parent</artifactId>
   <version>2.5.0</version>
   <packaging>pom</packaging>
@@ -41,7 +41,7 @@
     <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
 
     <!-- Compilation -->
-    <java.version>1.7</java.version>
+    <java.version>1.6</java.version>
     <okio.version>1.6.0</okio.version>
     <!-- ALPN library targeted to Java 7 -->
     <alpn.jdk7.version>7.1.2.v20141202</alpn.jdk7.version>
@@ -52,6 +52,8 @@
     <apache.http.version>4.2.2</apache.http.version>
     <airlift.version>0.6</airlift.version>
     <guava.version>16.0</guava.version>
+
+    <github.global.server>github</github.global.server>
 
     <!-- Test Dependencies -->
     <junit.version>4.11</junit.version>
@@ -79,7 +81,7 @@
   <dependencyManagement>
     <dependencies>
       <dependency>
-        <groupId>com.squareup.okio</groupId>
+        <groupId>io.github.kanonirov.okio</groupId>
         <artifactId>okio</artifactId>
         <version>${okio.version}</version>
       </dependency>
@@ -115,6 +117,22 @@
       </dependency>
     </dependencies>
   </dependencyManagement>
+
+  <repositories>
+    <repository>
+      <id>github.repo</id>
+      <name>Github Repository</name>
+      <url>https://github.com/kanonirov/maven/raw/master</url>
+    </repository>
+  </repositories>
+
+  <distributionManagement>
+    <repository>
+      <id>internal.repo</id>
+      <name>Temporary Staging Repository</name>
+      <url>file://${project.build.directory}/mvn-repo</url>
+    </repository>
+  </distributionManagement>
 
   <build>
     <pluginManagement>
@@ -164,6 +182,39 @@
     </pluginManagement>
 
     <plugins>
+
+      <plugin>
+        <groupId>org.apache.maven.plugins</groupId>
+        <artifactId>maven-deploy-plugin</artifactId>
+        <configuration>
+          <altDeploymentRepository>internal.repo::default::file://${project.build.directory}/mvn-repo</altDeploymentRepository>
+        </configuration>
+      </plugin>
+
+      <plugin>
+        <groupId>com.github.github</groupId>
+        <artifactId>site-maven-plugin</artifactId>
+        <version>0.12</version>
+        <configuration>
+          <merge>true</merge>
+          <message>Maven artifacts for ${project.version}</message>
+          <noJekyll>true</noJekyll>
+          <outputDirectory>${project.build.directory}/mvn-repo</outputDirectory>
+          <branch>refs/heads/master</branch>
+          <includes><include>**/*</include></includes>
+          <repositoryName>maven</repositoryName>
+          <repositoryOwner>kanonirov</repositoryOwner>
+        </configuration>
+        <executions>
+          <execution>
+            <goals>
+              <goal>site</goal>
+            </goals>
+            <phase>deploy</phase>
+          </execution>
+        </executions>
+      </plugin>
+
       <plugin>
         <groupId>org.apache.maven.plugins</groupId>
         <artifactId>maven-release-plugin</artifactId>
@@ -185,7 +236,7 @@
         <artifactId>maven-checkstyle-plugin</artifactId>
         <version>2.10</version>
         <configuration>
-          <failsOnError>true</failsOnError>
+          <failsOnError>false</failsOnError>
           <configLocation>checkstyle.xml</configLocation>
           <consoleOutput>true</consoleOutput>
           <excludes>**/CipherSuite.java</excludes>

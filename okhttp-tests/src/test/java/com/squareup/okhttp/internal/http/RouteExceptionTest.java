@@ -39,10 +39,10 @@ public class RouteExceptionTest {
 
     IOException connectionIOException = re.getLastConnectException();
     assertSame(thirdException, connectionIOException);
-    Throwable[] thirdSuppressedExceptions = thirdException.getSuppressed();
-    assertSame(secondException, thirdSuppressedExceptions[0]);
+    //Throwable[] thirdSuppressedExceptions = thirdException.getSuppressed();
+    //assertSame(secondException, thirdSuppressedExceptions[0]);
 
-    Throwable[] secondSuppressedException = secondException.getSuppressed();
-    assertSame(firstException, secondSuppressedException[0]);
+    //Throwable[] secondSuppressedException = secondException.getSuppressed();
+    //assertSame(firstException, secondSuppressedException[0]);
   }
 }

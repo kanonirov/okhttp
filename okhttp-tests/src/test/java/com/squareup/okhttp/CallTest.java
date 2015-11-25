@@ -85,7 +85,7 @@ import static org.junit.Assert.assertTrue;
 import static org.junit.Assert.fail;
 
 public final class CallTest {
-  @Rule public final TestRule timeout = new Timeout(30_000);
+  @Rule public final TestRule timeout = new Timeout(30000);
   @Rule public final MockWebServer server = new MockWebServer();
   @Rule public final MockWebServer server2 = new MockWebServer();
 
@@ -1641,7 +1641,7 @@ public final class CallTest {
     server.enqueue(new MockResponse().setBody("A"));
 
     final CountDownLatch latch = new CountDownLatch(1);
-    final AtomicReference<String> bodyRef = new AtomicReference<>();
+    final AtomicReference<String> bodyRef = new AtomicReference<String>();
     final AtomicBoolean failureRef = new AtomicBoolean();
 
     Request request = new Request.Builder().url(server.url("/a")).tag("request A").build();
@@ -1738,7 +1738,7 @@ public final class CallTest {
         .header("User-Agent", "SyncApiTest")
         .build();
 
-    final BlockingQueue<Response> responseRef = new SynchronousQueue<>();
+    final BlockingQueue<Response> responseRef = new SynchronousQueue<Response>();
     client.newCall(request).enqueue(new Callback() {
       @Override public void onFailure(Request request, IOException e) {
         throw new AssertionError();
@@ -1882,7 +1882,7 @@ public final class CallTest {
 
   private static class RecordingSSLSocketFactory extends DelegatingSSLSocketFactory {
 
-    private List<SSLSocket> socketsCreated = new ArrayList<>();
+    private List<SSLSocket> socketsCreated = new ArrayList<SSLSocket>();
 
     public RecordingSSLSocketFactory(SSLSocketFactory delegate) {
       super(delegate);

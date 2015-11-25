@@ -8,6 +8,7 @@ import com.squareup.okhttp.mockwebserver.MockWebServer;
 import java.io.File;
 import java.io.IOException;
 import java.net.HttpURLConnection;
+import java.nio.charset.Charset;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.Date;
@@ -18,7 +19,6 @@ import org.junit.Before;
 import org.junit.Rule;
 import org.junit.Test;
 
-import static java.nio.charset.StandardCharsets.US_ASCII;
 import static okio.Okio.buffer;
 import static okio.Okio.source;
 import static org.junit.Assert.assertEquals;
@@ -140,7 +140,7 @@ public class OkUrlFactoryTest {
   }
 
   private void assertResponseBody(HttpURLConnection connection, String expected) throws Exception {
-    String actual = buffer(source(connection.getInputStream())).readString(US_ASCII);
+    String actual = buffer(source(connection.getInputStream())).readString(Charset.forName("US-ASCII"));
     assertEquals(expected, actual);
   }
 

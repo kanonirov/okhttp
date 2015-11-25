@@ -203,7 +203,7 @@ public final class CertificatePinner {
     if (directPins == null && wildcardPins == null) return null;
 
     if (directPins != null && wildcardPins != null) {
-      Set<ByteString> pins = new LinkedHashSet<>();
+      Set<ByteString> pins = new LinkedHashSet<ByteString>();
       pins.addAll(directPins);
       pins.addAll(wildcardPins);
       return pins;
@@ -232,7 +232,7 @@ public final class CertificatePinner {
 
   /** Builds a configured certificate pinner. */
   public static final class Builder {
-    private final Map<String, Set<ByteString>> hostnameToPins = new LinkedHashMap<>();
+    private final Map<String, Set<ByteString>> hostnameToPins = new LinkedHashMap<String, Set<ByteString>>();
 
     /**
      * Pins certificates for {@code hostname}.
@@ -245,7 +245,7 @@ public final class CertificatePinner {
     public Builder add(String hostname, String... pins) {
       if (hostname == null) throw new IllegalArgumentException("hostname == null");
 
-      Set<ByteString> hostPins = new LinkedHashSet<>();
+      Set<ByteString> hostPins = new LinkedHashSet<ByteString>();
       Set<ByteString> previousPins = hostnameToPins.put(hostname, unmodifiableSet(hostPins));
       if (previousPins != null) {
         hostPins.addAll(previousPins);

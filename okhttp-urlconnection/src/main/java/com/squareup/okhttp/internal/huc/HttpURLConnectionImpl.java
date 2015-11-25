@@ -76,7 +76,7 @@ import okio.Sink;
  * header fields, request method, etc.) are immutable.
  */
 public class HttpURLConnectionImpl extends HttpURLConnection {
-  private static final Set<String> METHODS = new LinkedHashSet<>(
+  private static final Set<String> METHODS = new LinkedHashSet<String>(
       Arrays.asList("OPTIONS", "GET", "HEAD", "POST", "PUT", "DELETE", "TRACE", "PATCH"));
   private static final RequestBody EMPTY_REQUEST_BODY = RequestBody.create(null, new byte[0]);
 
@@ -568,7 +568,7 @@ public class HttpURLConnectionImpl extends HttpURLConnection {
    * defined in {@link Protocol OkHttp's protocol enumeration}.
    */
   private void setProtocols(String protocolsString, boolean append) {
-    List<Protocol> protocolsList = new ArrayList<>();
+    List<Protocol> protocolsList = new ArrayList<Protocol>();
     if (append) {
       protocolsList.addAll(client.getProtocols());
     }
@@ -593,7 +593,7 @@ public class HttpURLConnectionImpl extends HttpURLConnection {
     setFixedLengthStreamingMode((long) contentLength);
   }
 
-  @Override public void setFixedLengthStreamingMode(long contentLength) {
+  public void setFixedLengthStreamingMode(long contentLength) {
     if (super.connected) throw new IllegalStateException("Already connected");
     if (chunkLength > 0) throw new IllegalStateException("Already in chunked mode");
     if (contentLength < 0) throw new IllegalArgumentException("contentLength < 0");

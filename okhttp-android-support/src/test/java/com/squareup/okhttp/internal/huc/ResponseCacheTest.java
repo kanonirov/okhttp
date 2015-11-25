@@ -47,7 +47,6 @@ import java.net.URI;
 import java.net.URISyntaxException;
 import java.net.URL;
 import java.net.URLConnection;
-import java.nio.charset.StandardCharsets;
 import java.security.Principal;
 import java.security.cert.Certificate;
 import java.text.DateFormat;
@@ -1559,7 +1558,7 @@ public final class ResponseCacheTest {
   }
 
   public void assertCookies(URL url, String... expectedCookies) throws Exception {
-    List<String> actualCookies = new ArrayList<>();
+    List<String> actualCookies = new ArrayList<String>();
     for (HttpCookie cookie : cookieManager.getCookieStore().get(url.toURI())) {
       actualCookies.add(cookie.toString());
     }
@@ -1916,7 +1915,7 @@ public final class ResponseCacheTest {
    */
   @Test public void responseCacheReturnsNullStatusLine() throws Exception {
     String cachedContentString = "Hello";
-    final byte[] cachedContent = cachedContentString.getBytes(StandardCharsets.US_ASCII);
+    final byte[] cachedContent = cachedContentString.getBytes("US-ASCII");
 
     Internal.instance.setCache(client, new CacheAdapter(new AbstractResponseCache() {
       @Override
@@ -1926,7 +1925,7 @@ public final class ResponseCacheTest {
         return new CacheResponse() {
           @Override public Map<String, List<String>> getHeaders() throws IOException {
             String contentType = "text/plain";
-            Map<String, List<String>> headers = new HashMap<>();
+            Map<String, List<String>> headers = new HashMap<String, List<String>>();
             headers.put("Content-Length", Arrays.asList(Integer.toString(cachedContent.length)));
             headers.put("Content-Type", Arrays.asList(contentType));
             headers.put("Expires", Arrays.asList(formatDate(-1, TimeUnit.HOURS)));
@@ -2004,7 +2003,7 @@ public final class ResponseCacheTest {
     server.enqueue(new MockResponse()
         .setBody("ABC"));
 
-    final AtomicReference<Map<String, List<String>>> requestHeadersRef = new AtomicReference<>();
+    final AtomicReference<Map<String, List<String>>> requestHeadersRef = new AtomicReference<Map<String, List<String>>>();
     Internal.instance.setCache(client, new CacheAdapter(new AbstractResponseCache() {
       @Override public CacheResponse get(URI uri, String requestMethod,
           Map<String, List<String>> requestHeaders) throws IOException {

@@ -112,7 +112,7 @@ public final class FramedTransport implements Transport {
   public static List<Header> writeNameValueBlock(Request request, Protocol protocol,
       String version) {
     Headers headers = request.headers();
-    List<Header> result = new ArrayList<>(headers.size() + 10);
+    List<Header> result = new ArrayList<Header>(headers.size() + 10);
     result.add(new Header(TARGET_METHOD, request.method()));
     result.add(new Header(TARGET_PATH, RequestLine.requestPath(request.httpUrl())));
     String host = Util.hostHeader(request.httpUrl());
